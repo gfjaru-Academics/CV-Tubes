@@ -3,8 +3,8 @@ Tugas Besar Computer Vision A
 
 # Prerequisite
 - Python 3
-- OpenCV
-- PIL
+- venv
+- tba.
 
 # Notice
 Follow this rules: https://gist.github.com/peterhurford/3ad9f48071bd2665a8af
