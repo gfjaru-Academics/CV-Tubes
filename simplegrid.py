@@ -7,15 +7,15 @@ grid = 40 #determine grid size, rectangle with the same size of size
 height = np.size(img, 0) #finding the height of the picture
 width = np.size(img, 1) #finding the width of the picture
  
-print height
-print width
+print(height)
+print(width)
  
 #compute the coordinate of height and width in each grid
 h= [x for x in range(0,height) if x%grid==0]
 w= [x for x in range(0,width) if x%grid==0]
  
-print h,np.size(h,0)
-print w,np.size(w,0)
+print(h,np.size(h,0))
+print(w,np.size(w,0))
  
 # cv2.rectangle(resized,(h[0],0),(h[1],50),(0,255,0),0)
 for i in range(0,np.size(w,0)-1):
