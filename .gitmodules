@@ -1,0 +1,3 @@
+[submodule "fj-pas"]
+	path = fj-pas
+	url = https://github.com/gfjaru/fj-pas
