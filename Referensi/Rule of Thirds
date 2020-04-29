@@ -1,0 +1,21 @@
+import cv2
+from scipy import ndimage
+from numpy import asarray
+image = cv2.imread('gku12.jpg')
+gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+(thresh, blackAndWhiteImage) = cv2.threshold(gray, 127, 255, cv2.THRESH_BINARY)
+data = asarray(blackAndWhiteImage)
+com = ndimage.measurements.center_of_mass(data)
+h, w, d = image.shape
+print(h,w)
+print(com) #(h,w)
+if (float(w) * 0.27) <= float(com[1]) <= (float(w) * 0.39) and (float(h) * 0.27) <= float(com[0]) <= (float(h) * 0.39):
+    print("Foto Bagus Menurut Rule of Thirds")
+if (float(w) * 0.27) <= float(com[1]) <= (float(w) * 0.39) and (float(h) * 0.6) <= float(com[0]) <= (float(h) * 0.72):
+    print("Foto Bagus Menurut Rule of Thirds")
+if (float(w) * 0.6) <= float(com[1]) <= (float(w) * 0.72) and (float(h) * 0.27) <= float(com[0]) <= (float(h) * 0.39):
+    print("Foto Bagus Menurut Rule of Thirds")
+if (float(w) * 0.6) <= float(com[1]) <= (float(w) * 0.72) and (float(h) * 0.6) <= float(com[0]) <= (float(h) * 0.72):
+    print("Foto Bagus Menurut Rule of Thirds")
+cv2.waitKey(0)
+cv2.destroyAllWindows()
