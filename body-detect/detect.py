@@ -1,9 +1,9 @@
 import numpy as np
 import cv2 as cv
-body_cascade = cv.CascadeClassifier('D:/Kampus/Materi/TINGKAT 3/SEMESTER 6/Komvis/body-detection-haar-master/body-detection-haar-master/haarcascade_fullbody.xml')
-upper_cascade = cv.CascadeClassifier('D:/Kampus/Materi/TINGKAT 3/SEMESTER 6/Komvis/body-detection-haar-master/body-detection-haar-master/haarcascade_upperbody.xml')
-lower_cascade = cv.CascadeClassifier('D:/Kampus/Materi/TINGKAT 3/SEMESTER 6/Komvis/body-detection-haar-master/body-detection-haar-master/haarcascade_lowerbody.xml')
-img = cv.imread('D:/Kampus/Materi/TINGKAT 3/SEMESTER 6/Komvis/body-detection-haar-master/body-detection-haar-master/smp3.jpg')
+body_cascade = cv.CascadeClassifier('haarcascade_fullbody.xml')
+upper_cascade = cv.CascadeClassifier('haarcascade_upperbody.xml')
+lower_cascade = cv.CascadeClassifier('haarcascade_lowerbody.xml')
+img = cv.imread('smp3.jpg')
 gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
 
 
