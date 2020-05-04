@@ -62,7 +62,7 @@ class ComputerVision:
     Image = cv2.imread(img)
     Height, Width, ColChannel = Image.shape
     ConvertGrayscale = cv2.cvtColor(Image, cv2.COLOR_BGR2GRAY)
-    Faces = Classifier.detectMultiScale(ConvertGrayscale, 1.3, 5)
+    Faces = Classifier.detectMultiScale(ConvertGrayscale, 1.1, 1)
 
     FaceSize = []
     for (x, y, w, h) in Faces:
