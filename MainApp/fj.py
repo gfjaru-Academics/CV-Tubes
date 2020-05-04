@@ -58,7 +58,7 @@ class ComputerVision:
       output['rot'] = 1
 
   def PortraitUpper(self, img, classifier, output): 
-    Classifier = cv2.CascadeClassifier(classifier['frontalface'])
+    Classifier = cv2.CascadeClassifier(classifier['upperbody'])
     Image = cv2.imread(img)
     Height, Width, ColChannel = Image.shape
     ConvertGrayscale = cv2.cvtColor(Image, cv2.COLOR_BGR2GRAY)
@@ -68,13 +68,7 @@ class ComputerVision:
     for (x, y, w, h) in Faces:
       FaceSize.append((x+w)*(y+h))
     
-    Calculated = []
-    for xFaces in FaceSize:
-      ratio = ((xFaces/(Width*Height))*100)
-      if ratio > 60:
-        Calculated.append(ratio)
-    
-    if Calculated:
+    if FaceSize:
       output['pas_foto_half'] = 1
   
   def PortraitFull(self, img, classifier, output): 
