@@ -39,6 +39,7 @@ class ComputerVision:
   def classifyImage(self):
     for images in [name for name in os.listdir(self.originDirectory)]:
       self.checkImage(self.originDirectory + images)
+      ## move to folder
 
   def RuleOfThird(self, img, output):
     Image = cv2.imread(img)
@@ -48,13 +49,31 @@ class ComputerVision:
     Data = asarray(BoWImage)
     MeasureCoM = ndimage.measurements.center_of_mass(Data)
 
-    if (float(Width) * 0.27) <= float(MeasureCoM[1]) <= (float(Width) * 0.39) and (float(Height) * 0.27) <= float(MeasureCoM[0]) <= (float(Height) * 0.39):
-      output['rot'] = 1
-    if (float(Width) * 0.27) <= float(MeasureCoM[1]) <= (float(Width) * 0.39) and (float(Height) * 0.6) <= float(MeasureCoM[0]) <= (float(Height) * 0.72):
-      output['rot'] = 1
-    if (float(Width) * 0.6) <= float(MeasureCoM[1]) <= (float(Width) * 0.72) and (float(Height) * 0.27) <= float(MeasureCoM[0]) <= (float(Height) * 0.39):
-      output['rot'] = 1
-    if (float(Width) * 0.6) <= float(MeasureCoM[1]) <= (float(Width) * 0.72) and (float(Height) * 0.6) <= float(MeasureCoM[0]) <= (float(Height) * 0.72):
+    n = 110
+    bu = 0
+    ba = 0
+
+    for x in range(35):
+      n = n + 1
+      (thresh, blackAndWhiteImage) = cv2.threshold(ConvertGrayscale, n, 255, cv2.THRESH_BINARY)
+      data = asarray(blackAndWhiteImage)
+      com = ndimage.measurements.center_of_mass(data)
+
+      if ((float(Width) * 0.27) <= float(com[1]) <= (float(Width) * 0.39) and (float(Height) * 0.27) <= float(com[0]) <= (float(Height) * 0.39)):
+        ba = ba + 1
+      else:
+        if ((float(Height) * 0.6) <= float(com[0]) <= (float(Height) * 0.72)):
+          ba = ba + 1
+        else:
+          if((float(Height) * 0.27) <= float(com[0]) <= (float(Height) * 0.39)):
+            ba = ba + 1
+          else:
+            if((float(Width) * 0.6) <= float(com[1]) <= (float(Width) * 0.72)):
+              ba = ba + 1
+            else:
+              bu = bu + 1
+    
+    if ba > bu:
       output['rot'] = 1
 
   def PortraitUpper(self, img, classifier, output): 
@@ -70,7 +89,7 @@ class ComputerVision:
     
     if FaceSize:
       output['pas_foto_half'] = 1
-  
+
   def PortraitFull(self, img, classifier, output): 
     Classifier = cv2.CascadeClassifier(classifier['fullbody'])
     Image = cv2.imread(img)
