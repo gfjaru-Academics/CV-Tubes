@@ -1,21 +1,50 @@
 import cv2
 from scipy import ndimage
 from numpy import asarray
-image = cv2.imread('gku12.jpg')
+
+image = cv2.imread('Untitled.jpg')
 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-(thresh, blackAndWhiteImage) = cv2.threshold(gray, 127, 255, cv2.THRESH_BINARY)
-data = asarray(blackAndWhiteImage)
-com = ndimage.measurements.center_of_mass(data)
 h, w, d = image.shape
-print(h,w)
-print(com) #(h,w)
-if (float(w) * 0.27) <= float(com[1]) <= (float(w) * 0.39) and (float(h) * 0.27) <= float(com[0]) <= (float(h) * 0.39):
-    print("Foto Bagus Menurut Rule of Thirds")
-if (float(w) * 0.27) <= float(com[1]) <= (float(w) * 0.39) and (float(h) * 0.6) <= float(com[0]) <= (float(h) * 0.72):
-    print("Foto Bagus Menurut Rule of Thirds")
-if (float(w) * 0.6) <= float(com[1]) <= (float(w) * 0.72) and (float(h) * 0.27) <= float(com[0]) <= (float(h) * 0.39):
-    print("Foto Bagus Menurut Rule of Thirds")
-if (float(w) * 0.6) <= float(com[1]) <= (float(w) * 0.72) and (float(h) * 0.6) <= float(com[0]) <= (float(h) * 0.72):
-    print("Foto Bagus Menurut Rule of Thirds")
+n = 110
+bu = 0
+ba = 0
+print(w, h)  # (h,w)
+for x in range(35):
+    n = n + 1
+    (thresh, blackAndWhiteImage) = cv2.threshold(gray, n, 255, cv2.THRESH_BINARY)
+    data = asarray(blackAndWhiteImage)
+    com = ndimage.measurements.center_of_mass(data)
+
+    if ((float(w) * 0.27) <= float(com[1]) <= (float(w) * 0.39) and (float(h) * 0.27) <= float(com[0]) <= (float(h) * 0.39)):
+        ba = ba + 1
+    else:
+        if ((float(h) * 0.6) <= float(com[0]) <= (float(h) * 0.72)):
+            ba = ba + 1
+        else:
+            if((float(h) * 0.27) <= float(com[0]) <= (float(h) * 0.39)):
+                ba = ba + 1
+            else:
+                if((float(w) * 0.6) <= float(com[1]) <= (float(w) * 0.72)):
+                    ba = ba + 1
+                else:
+                    bu = bu + 1
+    cv2.line(image, (w-int(com[1]),h-int(com[0])) ,(w-int(com[1]),h-int(com[0])), (0, 0, 225),10)
+cv2.line(image, (0,int(float(h) * 0.33)),(w, int(float(h) * 0.33)), (0, 0, 0),1)
+cv2.line(image, (0,int(float(h) * 0.66)),(w, int(float(h) * 0.66)), (0, 0, 0),1)
+cv2.line(image, (0,int(float(h) * 0.27)),(w, int(float(h) * 0.27)), (0, 255, 0),1)
+cv2.line(image, (0,int(float(h) * 0.39)),(w, int(float(h) * 0.39)), (0, 255, 0),1)
+cv2.line(image, (0,int(float(h) * 0.6)),(w, int(float(h) * 0.6)), (0, 255, 0),1)
+cv2.line(image, (0,int(float(h) * 0.72)),(w, int(float(h) * 0.72)), (0, 255, 0),1)
+cv2.line(image, (int(float(w) * 0.33),0),(int(float(w) * 0.33),h), (0, 0, 0),1)
+cv2.line(image, (int(float(w) * 0.66),0),(int(float(w) * 0.66),h), (0, 0, 0),1)
+cv2.line(image, (int(float(w) * 0.27),0),(int(float(w) * 0.27),h), (0, 255, 0),1)
+cv2.line(image, (int(float(w) * 0.39),0),(int(float(w) * 0.39),h), (0, 255, 0),1)
+cv2.line(image, (int(float(w) * 0.6),0),(int(float(w) * 0.6),h), (0, 255, 0),1)
+cv2.line(image, (int(float(w) * 0.72),0),(int(float(w) * 0.72),h), (0, 255, 0),1)
+if ba > bu:
+    a = "Foto Memenuhi ROT"
+else:
+    a= "Foto Tidak Memenuhi ROT"
+cv2.imshow(a,image)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
